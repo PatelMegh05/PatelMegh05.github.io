@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Peak Progress | Stay Consistent</title>
+    <style>
+        /* --- CSS Variables (Theme Colors) --- */
+        :root {
+            --primary-dark: #2C4A3B; /* Forest Green */
+            --primary-light: #C4D7C6; /* Sage Green */
+            --accent-green: #487A5B; /* Mid Green */
+            --bg-light: #F8FAF9; /* Off-white */
+            --white: #FFFFFF;
+            --text-dark: #1A2520;
+            --text-gray: #4A5D53;
+            --accent-yellow: #ECA400;
+        }
+
+        /* --- Reset & Base Styles --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            line-height: 1.2;
+            color: var(--primary-dark);
+        }
+
+        /* --- Animations --- */
+        /* Scroll Reveal Base Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Float Animation for Hero Image */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* Pulse Animation for CTA */
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(72, 122, 91, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(72, 122, 91, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(72, 122, 91, 0); }
+        }
+
+        /* --- Navigation --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background-color: var(--white);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-dark);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-green);
+            color: var(--white);
+            padding: 0.8rem 1.8rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: transform 0.3s, background-color 0.3s;
+            border: 2px solid var(--accent-green);
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-dark);
+            color: var(--white);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 10rem 5% 6rem;
+            background: linear-gradient(135deg, var(--bg-light) 0%, var(--primary-light) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 90vh;
+        }
+
+        .hero-content {
+            max-width: 55%;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            animation: slideUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            margin-bottom: 1.5rem;
+            animation: slideUp 1.2s ease-out;
+        }
+
+        .hero-graphic img {
+            width: 100%;
+            max-width: 500px; /* adjust based on how big you want it */
+        height: auto;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        animation: float 4s ease-in-out infinite;
+}
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Generic Section Styling --- */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+        }
+
+        /* --- Why Peak Progress Section --- */
+        .why-section {
+            background-color: var(--white);
+        }
+
+        .problem-solution {
+            display: flex;
+            gap: 4rem;
+            align-items: center;
+            background: var(--bg-light);
+            padding: 3rem;
+            border-radius: 16px;
+            border-left: 8px solid var(--accent-yellow);
+        }
+
+        .problem-list ul {
+            list-style: none;
+            margin-top: 1.5rem;
+        }
+
+        .problem-list li {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .problem-list li::before {
+            content: "❌";
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .solution-box {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 2.5rem;
+            border-radius: 12px;
+            flex: 1;
+        }
+
+        /* --- How It Works Section --- */
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: var(--white);
+            padding: 2.5rem 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .step-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary-light);
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            opacity: 0.5;
+            transition: color 0.3s;
+        }
+
+        .step-card:hover .step-number {
+            color: var(--accent-green);
+            opacity: 0.2;
+        }
+
+        .step-card h3 {
+            margin: 1.5rem 0 1rem;
+            font-size: 1.4rem;
+        }
+
+        /* --- Split Section (Audience & Difference) --- */
+        .split-section {
+            display: flex;
+            gap: 3rem;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            padding: 6rem 5%;
+        }
+
+        .split-box {
+            flex: 1;
+            padding: 3rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 16px;
+        }
+
+        .split-box h2 {
+            color: var(--white);
+            margin-bottom: 1.5rem;
+        }
+
+        .check-list {
+            list-style: none;
+        }
+
+        .check-list li {
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .check-list li::before {
+            content: "✔";
+            color: var(--accent-yellow);
+            font-weight: bold;
+        }
+
+        /* --- Coming Soon Section --- */
+        .coming-soon {
+            text-align: center;
+            background-color: var(--white);
+        }
+
+        .tags-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .tag {
+            background: var(--primary-light);
+            color: var(--primary-dark);
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .tag:hover {
+            background: var(--primary-dark);
+            color: var(--white);
+            transform: scale(1.05);
+        }
+
+        /* --- Final CTA Section --- */
+        .final-cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-light) 100%);
+        }
+
+        .final-cta h2 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .cta-buttons .btn {
+            animation: pulse 2s infinite;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background-color: var(--primary-dark);
+            color: var(--primary-light);
+            text-align: center;
+            padding: 3rem 5%;
+        }
+
+        footer h3 {
+            color: var(--white);
+            margin-bottom: 1rem;
+        }
+
+        footer p.tagline {
+            font-size: 1.2rem;
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        /* --- Responsive --- */
+        @media (max-width: 900px) {
+            .hero, .split-section {
+                flex-direction: column;
+                text-align: center;
+            }
+            .hero-content {
+                max-width: 100%;
+            }
+            .hero-graphic {
+                font-size: 8rem;
+                margin-top: 2rem;
+            }
+            .problem-solution {
+                flex-direction: column;
+            }
+            .problem-list ul {
+                text-align: left;
+            }
+            .cta-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">⛰️ Peak Progress</div>
+        <a href="#join" class="btn">Sign Up</a>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Stay consistent. <br>Perform at your peak.</h1>
+            <p>Most students don’t fail because they lack motivation — they fail because they lack structure and accountability.</p>
+            <p>Peak Progress helps you stay consistent with your goals by placing you in small, high-performance groups where your progress actually matters.</p>
+            <br>
+            <a href="#join" class="btn">Join Peak Progress today</a>
+        </div>
+        <div class="hero-graphic">
+            <img src="your-image.png" alt="Peak Progress App Preview">
+        </div>
+    </section>
+
+    <section class="why-section reveal">
+        <div class="section-header">
+            <h2>Why Peak Progress?</h2>
+            <p>You’ve probably experienced this before...</p>
+        </div>
+        
+        <div class="problem-solution">
+            <div class="problem-list">
+                <h3>The Problem</h3>
+                <ul>
+                    <li>Skipped workouts when things got busy</li>
+                    <li>Procrastinated on assignments until it piled up</li>
+                    <li>Started goals strong… then slowly fell off</li>
+                </ul>
+            </div>
+            <div class="solution-box">
+                <h3 style="color: white; margin-bottom: 10px;">The Solution</h3>
+                <p style="font-size: 1.1rem;">The problem isn’t you — it’s the system. Peak Progress builds a system that keeps you on track, even when motivation fades.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="reveal">
+        <div class="section-header">
+            <h2>How It Works</h2>
+        </div>
+        <div class="grid-4">
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Join a Group</h3>
+                <p>Get matched with students working toward similar goals (fitness, academics, habits).</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>Set Weekly Goals</h3>
+                <p>Create clear, measurable commitments every week.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Stay Accountable</h3>
+                <p>Your group expects you to follow through — no more skipping without consequences.</p>
+            </div>
+            <div class="step-card">
+                <div class="step-number">4</div>
+                <h3>Earn Rewards</h3>
+                <p>Consistency is reinforced through incentives, competition, and group accountability.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="split-section reveal">
+        <div class="split-box">
+            <h2>Built for Performance-Oriented Students</h2>
+            <p style="margin-bottom: 1.5rem; opacity: 0.9;">Peak Progress is designed for students who:</p>
+            <ul class="check-list">
+                <li>Want to improve in multiple areas (school, fitness, life)</li>
+                <li>Struggle with consistency during busy periods</li>
+                <li>Perform better with structure and expectations</li>
+            </ul>
+        </div>
+        <div class="split-box">
+            <h2>What Makes Us Different</h2>
+            <p style="margin-bottom: 1.5rem; opacity: 0.9;">Unlike other habit tracking apps:</p>
+            <ul class="check-list">
+                <li>Real accountability (not just self-tracking)</li>
+                <li>Group-based system (social pressure + support)</li>
+                <li>Incentives that actually motivate behavior</li>
+                <li>Designed specifically for students</li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="coming-soon reveal">
+        <h2>Coming Soon</h2>
+        <p>We are constantly building tools to help you perform.</p>
+        <div class="tags-container">
+            <span class="tag">🏆 Leaderboards & rankings</span>
+            <span class="tag">🔥 Monthly challenges</span>
+            <span class="tag">🎁 Rewards system</span>
+            <span class="tag">📊 Progress analytics</span>
+        </div>
+    </section>
+
+    <section id="join" class="final-cta reveal">
+        <h2>Start Showing Up Consistently</h2>
+        <p style="font-size: 1.2rem; color: var(--text-gray);">Stop relying on motivation. Start building a system that works.</p>
+        <div class="cta-buttons">
+            <a href="#" class="btn">Sign Up</a>
+            <a href="#" class="btn btn-outline">Join Your First Group</a>
+        </div>
+    </section>
+
+    <footer>
+        <h3 style="color: white;">Peak Progress</h3>
+        <p class="tagline">"Where motivation ends, structure begins."</p>
+        <p style="font-size: 0.9rem; opacity: 0.7;">&copy; 2026 Peak Progress. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+
+            const revealOnScroll = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                        observer.unobserve(entry.target); // Only animate once
+                    }
+                });
+            }, {
+                threshold: 0.15 // Trigger when 15% of the element is visible
+            });
+
+            reveals.forEach(reveal => {
+                revealOnScroll.observe(reveal);
+            });
+        });
+    </script>
+</body>
+</html>
